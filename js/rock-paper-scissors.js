@@ -11,16 +11,16 @@ function getComputerChoice() {
 // compare the two hands 
 function playRound(computerChoice, playerChoice) {
     if (isTie(computerChoice, playerChoice)) {
-        result.textContent = "It's a tie this round"
+        resultRound.textContent = "It's a tie this round"
     } else {
         let winner = compareHands(computerChoice, playerChoice);
         if (winner) {
-            result.textContent = "Computer wins this round"
+            resultRound.textContent = "Computer wins this round"
             computerScore += 1
         }else {
-            result.textContent = "Player wins this round"
-            playerScore =+ 1
-        } 
+            resultRound.textContent = "Player wins this round"
+            playerScore += 1
+        }   
    }
 }
 
@@ -43,20 +43,42 @@ function isTie(hand1, hand2) {
     return false;
 }
 
+function game(score1, score2) {
+    if (score1 > 4) {
+        result.textContent += "Player wins. " + score1 + " vs " + score2
+        reset()
+    }
+    if (score2 > 4) {
+        result.textContent += "Computer wins. " + score1 + " vs " + score2
+        reset()
+    }   
+}
+
+function reset() {
+    playerScore = 0
+    computerScore = 0
+    result.textContent += "\n"
+}
+
 const buttonRock = document.getElementById('rock')
 const buttonPaper = document.getElementById('paper')
 const buttonScissors = document.getElementById('scissors')
 const result = document.getElementById('result')
+const resultRound = document.getElementById('result-round')
+const round = document.getElementById('round')
 let playerScore = 0;
 let computerScore = 0;
 
 buttonRock.addEventListener('click', () => {
     playRound(getComputerChoice(), 'rock')
+    game(playerScore, computerScore)
 })
 buttonPaper.addEventListener('click', () => {
     playRound(getComputerChoice(), 'paper')
+    game(playerScore, computerScore)
 })
 buttonScissors.addEventListener('click', () => {
     playRound(getComputerChoice(), 'scissors')
+    game(playerScore, computerScore)
 })
 
